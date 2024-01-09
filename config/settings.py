@@ -151,7 +151,7 @@ REST_FRAMEWORK = {
 # Настройки для Celery
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
-        'task': 'schedule.tasks.check_time_habits',  # Путь к задаче
+        'task': 'habits.tasks.check_time_habits',  # Путь к задаче
         'schedule': timedelta(seconds=20),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }

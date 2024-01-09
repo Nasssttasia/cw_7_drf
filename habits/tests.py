@@ -17,7 +17,7 @@ class HabitTestCase(APITestCase):
         )
 
         self.habit = Habit.objects.create(
-            owner=self.owner,
+            owner=self.user,
             related_habit=None,
             place='дом',
             time='00:10:30',
