@@ -15,6 +15,7 @@ class HabitTestCase(APITestCase):
         self.user = User.objects.create(
             email='nastya2360@mail.ru',
         )
+        self.user.save()
 
         self.habit = Habit.objects.create(
             owner=self.user,
@@ -25,12 +26,15 @@ class HabitTestCase(APITestCase):
             is_pleasant=False,
             time_to_complete='00:00:50',
             periodicity='1 00:00:00',
+            is_public=True,
         )
 
+        self.habit.save()
+        self.client.force_authenticate(user=self.user)
 
-    def test_habit_list(self):
+    def test_list_habit(self):
         response = self.client.get(
-            reverse('habits:list-create')
+            reverse('habits:public_habits')
         )
 
         self.assertEqual(
@@ -39,17 +43,17 @@ class HabitTestCase(APITestCase):
         )
 
         self.assertEqual(
-            response.json()['results'],
+            response.json(),
             [
                 {
                     "id": self.habit.pk,
                     "owner": self.user.id,
                     "related_habit": self.habit.related_habit,
                     "place": self.habit.place,
-                    'time': self.habit.time_to_act,
+                    'time': self.habit.time,
                     "action": self.habit.action,
                     "is_pleasant": self.habit.is_pleasant,
-                    "periodicity": self.habit.frequency,
+                    "periodicity": self.habit.periodicity,
                     "reward": self.habit.reward,
                     "time_to_complete": self.habit.time_to_complete,
                     "is_public": self.habit.is_public
