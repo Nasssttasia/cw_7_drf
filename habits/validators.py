@@ -8,6 +8,8 @@ def validate_related_fields_habits(value):
         raise ValidationError('Pleasant habit cant has a reward')
     if value.get('related_habit') and value.get('is_pleasant'):
         raise ValidationError('Pleasant habit cant has a related habit')
+    if value.get('reward') and value.get('related_habit'):
+        raise ValidationError('Habit cant has a reward ana related habit')
     if value.get('related_habit'):
         habit = Habit.objects.get(pk=value.get('related_habit').id)
         print(habit)

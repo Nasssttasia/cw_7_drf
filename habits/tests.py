@@ -27,7 +27,6 @@ class HabitTestCase(APITestCase):
             periodicity='1 00:00:00',
         )
 
-        self.client.force_authenticate(owner=self.user)
 
     def test_habit_list(self):
         response = self.client.get(
